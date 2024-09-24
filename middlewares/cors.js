@@ -7,6 +7,8 @@ const corsMiddleware = cors({
     "http://localhost:5500",
     "http://localhost:3000",
     "http://localhost:5173",
+    "https://cardsproject-58xb.onrender.com"
+
   ],
 });
 
