@@ -9,7 +9,7 @@ const generateAuthToken = (user) => {
     isAdmin: user.isAdmin,
     isBusiness: user.isBusiness,
   };
-  const token = jwt.sign(payload, SECRET_WORD);
+  const token = jwt.sign(payload, SECRET_WORD); 
   return token;
 };
 

@@ -4,6 +4,38 @@ const Card = require("./mongodb/Card");
 const config = require("config");
 const DB = config.get("DB");
 
+
+//1
+const getCards = async () => {
+  try {
+    let cards = await Card.find();
+    return cards;
+  } catch (error) {
+    return createError("Mongoose", error);
+  }
+};
+
+//2
+const getMyCards = async (userId) => {
+  try {
+    let cards = await Card.find({ user_id: userId });
+    return cards;
+  } catch (error) {
+    return createError("Mongoose", error);
+  }
+};
+
+//3
+const getCard = async (cardId) => {
+  try {
+    let card = await Card.findById(cardId);
+    return card;
+  } catch (error) {
+    return createError("Mongoose", error);
+  }
+};
+
+//4
 const createCard = async (newCard) => {
   if (DB === "mongodb") {
     try {
@@ -19,33 +51,8 @@ const createCard = async (newCard) => {
   return createError("DB", error);
 };
 
-const getCards = async () => {
-  try {
-    let cards = await Card.find();
-    return cards;
-  } catch (error) {
-    return createError("Mongoose", error);
-  }
-};
 
-const getCard = async (cardId) => {
-  try {
-    let card = await Card.findById(cardId);
-    return card;
-  } catch (error) {
-    return createError("Mongoose", error);
-  }
-};
-
-const getMyCards = async (userId) => {
-  try {
-    let cards = await Card.find({ user_id: userId });
-    return cards;
-  } catch (error) {
-    return createError("Mongoose", error);
-  }
-};
-
+//5
 const updateCard = async (cardId, newCard) => {
   try {
     let card = await Card.findByIdAndUpdate(cardId, newCard, { new: true });
@@ -55,15 +62,7 @@ const updateCard = async (cardId, newCard) => {
   }
 };
 
-const deleteCard = async (cardId) => {
-  try {
-    let card = await Card.findByIdAndDelete(cardId);
-    return card;
-  } catch (error) {
-    return createError("Mongoose", error);
-  }
-};
-
+//6
 const likeCard = async (cardId, userId) => {
   try {
     let card = await Card.findById(cardId);
@@ -87,6 +86,29 @@ const likeCard = async (cardId, userId) => {
   }
 };
 
+//7
+const deleteCard = async (cardId) => {
+  try {
+    let card = await Card.findByIdAndDelete(cardId);
+    return card;
+  } catch (error) {
+    return createError("Mongoose", error);
+  }
+};
+
+//BONUS 1
+const changeBizNumber = async (userId, newBizNumber) => {
+  try {
+    let user = await Card.findById(userId);
+    await user.updateOne({ bizNumber: newBizNumber })
+
+  } catch (error) {
+    createError("Mongoose", error);
+  }
+
+}
+
+
 module.exports = {
   createCard,
   getCards,
@@ -95,4 +117,5 @@ module.exports = {
   updateCard,
   deleteCard,
   likeCard,
+  changeBizNumber
 };

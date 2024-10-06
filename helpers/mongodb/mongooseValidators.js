@@ -14,6 +14,7 @@ const EMAIL = {
   lowercase: true,
   trim: true,
   unique: true,
+  sparse: true
 };
 
 const DEFAULT_VALIDATION = {

@@ -4,6 +4,7 @@ const User = require("./mongodb/User");
 const { createError } = require("../../utils/handleErrors");
 const { generateUserPassword, comaprePasswords } = require("../helpers/bcrypt");
 
+//1
 const registerUser = async (newUser) => {
   try {
     newUser.password = generateUserPassword(newUser.password);
@@ -18,24 +19,7 @@ const registerUser = async (newUser) => {
   }
 };
 
-const getUser = async (userId) => {
-  try {
-    let user = await User.findById(userId);
-    return user;
-  } catch (error) {
-    return createError("Mongoose", error);
-  }
-};
-
-const getUsers = async () => {
-  try {
-    let users = await User.find();
-    return users;
-  } catch (error) {
-    return createError("Mongoose", error);
-  }
-};
-
+//2
 const loginUser = async (email, password) => {
   try {
     const userFromDb = await User.findOne({ email });
@@ -57,4 +41,58 @@ const loginUser = async (email, password) => {
   }
 };
 
-module.exports = { registerUser, getUser, getUsers, loginUser };
+//3
+const getUsers = async () => {
+  try {
+    let users = await User.find();
+    return users;
+  } catch (error) {
+    return createError("Mongoose", error);
+  }
+};
+
+//4
+const getUser = async (userId) => {
+  try {
+    let user = await User.findById(userId);
+    return user;
+  } catch (error) {
+    return createError("Mongoose", error);
+  }
+};
+
+//5
+const editUser = async (userId, changes) => {
+  try {
+    await User.findByIdAndUpdate(userId, changes);
+
+  } catch (error) {
+    createError("Mongoose", error);
+  }
+}
+
+//6
+const changeBusinessStatus = async (userId) => {
+  try {
+    let user = await User.findById(userId);
+    await user.updateOne({ isBusiness: !user.isBusiness });
+
+  } catch (error) {
+    createError("Mongoose", error);
+  }
+}
+
+//7
+const deleteUser = async (userId) => {
+  try {
+    await User.findByIdAndDelete(userId);
+
+  } catch (error) {
+    createError("Mongoose", error);
+  }
+
+}
+
+
+
+module.exports = { registerUser, getUser, getUsers, loginUser, editUser, changeBusinessStatus, deleteUser };
