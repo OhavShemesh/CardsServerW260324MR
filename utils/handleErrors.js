@@ -1,8 +1,8 @@
 const chalk = require("chalk");
 
 const createError = (validator, error) => {
-  error.message = `${validator} Error: ${error.message}`;
   error.status = error.status || 400;
+  error.message = `${error.status} | ${validator} Error: ${error.message}`;
   throw new Error(error);
 };
 

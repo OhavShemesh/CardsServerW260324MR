@@ -1,5 +1,0 @@
-{
-    "time": "[2024-10-06 15-40-57]",
-    "status": "400",
-    "error message": "MongoServerError: Mongoose Error: E11000 duplicate key error collection: cardsServer.users index: address.EMAIL_1 dup key: { address.EMAIL: null }"
-}

@@ -19,7 +19,6 @@ const { generateBizNumber } = require("../../cards/helpers/generateBizNumber");
 
 const router = express.Router();
 
-// 1
 router.post("/", async (req, res) => {
   try {
     const error = validateRegistration(req.body);
@@ -36,7 +35,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// 2
 router.post("/login", async (req, res) => {
   try {
     const error = validateLogin(req.body);
@@ -54,7 +52,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// 3
 router.get("/", auth, async (req, res) => {
   try {
     const userInfo = req.user;
@@ -70,7 +67,6 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// 4
 router.get("/:id", auth, async (req, res) => {
   try {
     const userInfo = req.user;
@@ -90,7 +86,6 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-// 5
 router.put("/:id", auth, async (req, res) => {
   try {
     const userInfo = req.user;
@@ -111,7 +106,6 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-// 6
 router.patch("/:id", auth, async (req, res) => {
   try {
     const userInfo = req.user;
@@ -131,7 +125,6 @@ router.patch("/:id", auth, async (req, res) => {
   }
 });
 
-// 7
 router.delete("/:id", auth, async (req, res) => {
   try {
     const userInfo = req.user;

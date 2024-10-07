@@ -4,7 +4,6 @@ const User = require("./mongodb/User");
 const { createError } = require("../../utils/handleErrors");
 const { generateUserPassword, comaprePasswords } = require("../helpers/bcrypt");
 
-//1
 const registerUser = async (newUser) => {
   try {
     newUser.password = generateUserPassword(newUser.password);
@@ -19,7 +18,6 @@ const registerUser = async (newUser) => {
   }
 };
 
-//2
 const loginUser = async (email, password) => {
   try {
     const userFromDb = await User.findOne({ email });
@@ -41,7 +39,6 @@ const loginUser = async (email, password) => {
   }
 };
 
-//3
 const getUsers = async () => {
   try {
     let users = await User.find();
@@ -51,7 +48,6 @@ const getUsers = async () => {
   }
 };
 
-//4
 const getUser = async (userId) => {
   try {
     let user = await User.findById(userId);
@@ -61,32 +57,31 @@ const getUser = async (userId) => {
   }
 };
 
-//5
 const editUser = async (userId, changes) => {
   try {
-    await User.findByIdAndUpdate(userId, changes);
+    let user = await User.findByIdAndUpdate(userId, changes);
+    return user
 
   } catch (error) {
     createError("Mongoose", error);
   }
 }
 
-//6
 const changeBusinessStatus = async (userId) => {
   try {
     let user = await User.findById(userId);
     await user.updateOne({ isBusiness: !user.isBusiness });
+    return user
 
   } catch (error) {
     createError("Mongoose", error);
   }
 }
 
-//7
 const deleteUser = async (userId) => {
   try {
-    await User.findByIdAndDelete(userId);
-
+    let user = await User.findByIdAndDelete(userId);
+    return user
   } catch (error) {
     createError("Mongoose", error);
   }

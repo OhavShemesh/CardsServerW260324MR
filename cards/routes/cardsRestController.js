@@ -15,18 +15,16 @@ const { handleError } = require("../../utils/handleErrors");
 const validateCard = require("../validation/cardValidationService");
 const router = express.Router();
 
-// 1
 router.get("/", auth, async (req, res) => {
   try {
     let cards = await getCards();
     res.send(cards);
   } catch (error) {
     req.errorMessage = error.message || "Failed to get cards";
-    handleError(res, error.status || 400, req.errorMessage);
+    return handleError(res, error.status || 400, req.errorMessage);
   }
 });
 
-// 2
 router.get("/my-cards", auth, async (req, res) => {
   try {
     const userInfo = req.user;
@@ -42,7 +40,6 @@ router.get("/my-cards", auth, async (req, res) => {
   }
 });
 
-// 3
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -54,7 +51,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// 4
 router.post("/", auth, async (req, res) => {
   try {
     const userInfo = req.user;
@@ -78,7 +74,6 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// 5
 router.put("/:id", auth, async (req, res) => {
   try {
     const userInfo = req.user;
@@ -109,7 +104,6 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-// 6
 router.patch("/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
@@ -122,7 +116,6 @@ router.patch("/:id", auth, async (req, res) => {
   }
 });
 
-// 7
 router.delete("/:id", auth, async (req, res) => {
   try {
     const userInfo = req.user;
@@ -145,7 +138,6 @@ router.delete("/:id", auth, async (req, res) => {
   }
 });
 
-// BONUS 1
 router.put("/:id/:newBizNumber", auth, async (req, res) => {
   try {
     const allCards = await getCards();

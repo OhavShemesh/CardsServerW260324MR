@@ -6,6 +6,7 @@ const router = require("./router/router");
 const corsMiddleware = require("./middlewares/cors");
 const { handleError } = require("./utils/handleErrors");
 const loggerMiddleware = require("./logger/loggerService");
+const { getAllCardsAndInitial, getAllUsersAndInitial } = require("./initialData");
 
 const app = express();
 const PORT = process.env.PORT || 8181;
@@ -24,7 +25,11 @@ app.use((err, req, res, next) => {
   return handleError(res, 500, message);
 });
 
+
 app.listen(PORT, () => {
+  getAllCardsAndInitial()
+  getAllUsersAndInitial()
+
   console.log(chalk.yellow("app is listening to port " + PORT));
   connectToDb();
 });
