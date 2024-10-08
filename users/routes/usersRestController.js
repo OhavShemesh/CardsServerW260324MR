@@ -16,6 +16,7 @@ const {
   validateLogin,
 } = require("../validation/userValidationService");
 const { generateBizNumber } = require("../../cards/helpers/generateBizNumber");
+const { blockUser, checkBlackList } = require("../userBlock/userBlockCooldown");
 
 const router = express.Router();
 
@@ -36,17 +37,24 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+  if (checkBlackList(req.body.email, res)) {
+    return;
+  }
+
   try {
     const error = validateLogin(req.body);
     if (error) {
+      blockUser(req.body.email, false);
       req.errorMessage = `Joi Error: ${error}`;
       return handleError(res, 400, req.errorMessage);
     }
 
     let { email, password } = req.body;
     const token = await loginUser(email, password);
-    res.send(token);
+    blockUser(email, true);
+    return res.send(token);
   } catch (error) {
+    blockUser(req.body.email, false);
     req.errorMessage = error.message || "Failed to login user";
     return handleError(res, error.status || 400, req.errorMessage);
   }
