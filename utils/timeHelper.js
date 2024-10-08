@@ -1,5 +1,4 @@
 const add0 = (number) => {
-  //   return number > 9 ? number : "0" + number;
   return number.toString().padStart(2, "0");
 };
 
