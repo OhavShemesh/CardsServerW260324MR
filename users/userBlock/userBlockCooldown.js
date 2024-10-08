@@ -8,24 +8,20 @@ const blockUser = (email, success) => {
         emailsArray = [];
     } else {
         emailsArray.push(email);
-        console.log("emailsArray", emailsArray);
     }
 
     let count = emailsArray.filter(item => item === email).length;
 
     if (count >= 3) {
         blackList.push(email);
-        console.log(`User ${email} added to blacklist.`);
 
         let num = 0;
 
         const interval = setInterval(() => {
             num++;
-            console.log(num);
 
             if (num >= 86400) {
                 blackList = blackList.filter(item => item !== email);
-                console.log(`User ${email} removed from blacklist.`);
                 emailsArray = [];
                 clearInterval(interval);
             }
